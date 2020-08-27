@@ -1,3 +1,5 @@
+const whiteList = ['engineer', 'manager', 'salesman'];
+
 class Employee {
   constructor (name, type) {
     this.validateType(type);
@@ -6,13 +8,13 @@ class Employee {
   }
 
   validateType (type) {
-    if (![
-      'engineer',
-      'manager',
-      'salesman',
-    ].includes(type)) {
+    if (!this.inWhiteList(type)) {
       throw new Error(`Employee cannot be of type ${type}`);
     }
+  }
+
+  inWhiteList (type) {
+    return whiteList.includes(type);
   }
 
   toString () {
