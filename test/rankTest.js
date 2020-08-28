@@ -138,8 +138,3 @@ test('case 6, test rating', t => {
   const myRating = rating(voyage, history);
   t.is('A', myRating);
 });
-
-test.skip('bar', async t => {
-  const bar = Promise.resolve('bar');
-  t.is(await bar, 'bar');
-});
