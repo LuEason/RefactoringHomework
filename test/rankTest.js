@@ -116,6 +116,29 @@ test('case 5, test rating', t => {
   t.is('A', myRating);
 });
 
+test('case 6, test rating', t => {
+
+  const voyage = {
+    zone: 'west-indies',
+    length: 6,
+  };
+  const history = [
+    {
+      zone: 'east-indies',
+      profit: 0,
+    }
+  ];
+  for (let i = 0; i < 4; i++) {
+    history.push({
+      zone: 'west-africa',
+      profit: 7,
+    })
+  }
+
+  const myRating = rating(voyage, history);
+  t.is('A', myRating);
+});
+
 test.skip('bar', async t => {
   const bar = Promise.resolve('bar');
   t.is(await bar, 'bar');
