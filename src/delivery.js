@@ -1,54 +1,38 @@
 const handleIsRush = [
   function (deliveryState, deliveryTime) {
-    if ([
-      'MA',
-      'CT',
-    ].includes(deliveryState)) {
-      return 1;
-    }
-    return deliveryTime;
+    return ['MA', 'CT'].includes(deliveryState) ? 1 : deliveryTime;
   },
   function (deliveryState, deliveryTime) {
-    if ([
-      'NY',
-      'NH',
-    ].includes(deliveryState)) {
-      return 2;
-    }
-    return deliveryTime;
+    return ['NY', 'NH'].includes(deliveryState) ? 2 : deliveryTime;
   },
   function (deliveryState, deliveryTime) {
-    if (deliveryTime === 0) {
-      return 3;
-    }
-    return deliveryTime;
+    return deliveryTime === 0 ? 3 : deliveryTime;
   }
 ]
 
+const handleIsNotRush = [
+  function (deliveryState, deliveryTime) {
+    return ['MA', 'CT', 'NY'].includes(deliveryState) ? 2 : deliveryTime;
+  },
+  function (deliveryState, deliveryTime) {
+    return ['ME', 'NH'].includes(deliveryState) ? 3 : deliveryTime;
+  },
+  function (deliveryState, deliveryTime) {
+    return deliveryTime === 0 ? 4 : deliveryTime;
+  }
+]
 
 function deliveryDate(anOrder, isRush) {
+  let deliveryTime = 0;
   if (isRush) {
-    let deliveryTime = 0;
     handleIsRush.map(handler => {
       deliveryTime = handler(anOrder.deliveryState, deliveryTime);
     })
     return anOrder.placedOn.plusDays(1 + deliveryTime);
   } else {
-    let deliveryTime;
-    if ([
-      'MA',
-      'CT',
-      'NY',
-    ].includes(anOrder.deliveryState)) {
-      deliveryTime = 2;
-    } else if ([
-      'ME',
-      'NH',
-    ].includes(anOrder.deliveryState)) {
-      deliveryTime = 3;
-    } else {
-      deliveryTime = 4;
-    }
+    handleIsNotRush.map(handler => {
+      deliveryTime = handler(anOrder.deliveryState, deliveryTime);
+    })
     return anOrder.placedOn.plusDays(2 + deliveryTime);
   }
 }
