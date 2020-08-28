@@ -10,7 +10,7 @@ const invoice = {
   customer: 'Eason'
 }
 
-test('case 1, test rating', t => {
+test('case 1, test print', t => {
   let result = printOwing(invoice);
   const today = new Date();
   const dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);

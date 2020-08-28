@@ -13,11 +13,15 @@ class Employee {
     }
   }
 
-  inWhiteList (type) {
+  inWhiteList(type) {
     return whiteList.includes(type);
   }
 
-  toString () {
+  toString() {
     return `${this._name} (${this._type})`;
   }
 }
+
+module.exports = {
+  Employee
+};
