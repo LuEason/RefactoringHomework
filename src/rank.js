@@ -1,21 +1,26 @@
-function voyageRisk (voyage) {
+const COrEI = ['china', 'east-indies'];
+
+const handleRisk = [
+  function (voyage) {
+    return voyage.length > 4 ? 2 : 0;
+  },
+  function (voyage) {
+    return voyage.length > 8 ? voyage.length - 8 : 0;
+  },
+  function (voyage) {
+    return COrEI.includes(voyage.zone) ? 4 : 0;
+  },
+]
+
+function voyageRisk(voyage) {
   let result = 1;
-  if (voyage.length > 4) {
-    result += 2;
-  }
-  if (voyage.length > 8) {
-    result += voyage.length - 8;
-  }
-  if ([
-    'china',
-    'east-indies',
-  ].includes(voyage.zone)) {
-    result += 4;
-  }
+  handleRisk.map(handler => {
+    result += handler(voyage)
+  })
   return Math.max(result, 0);
 }
 
-function hasChina (history) {
+function hasChina(history) {
   return history.some(v => 'china' === v.zone);
 }
 
@@ -50,8 +55,7 @@ function voyageProfitFactor (voyage, history) {
     if (voyage.length > 18) {
       result -= 1;
     }
-  }
-  else {
+  } else {
     if (history.length > 8) {
       result += 1;
     }
@@ -68,8 +72,7 @@ function rating (voyage, history) {
   const chr = captainHistoryRisk(voyage, history);
   if (vpf * 3 > (vr + chr * 2)) {
     return 'A';
-  }
-  else {
+  } else {
     return 'B';
   }
 }
