@@ -12,10 +12,22 @@ const handleRisk = [
   },
 ]
 
+const handleHistoryRisk = [
+  function (voyage, history) {
+    return history.length < 5 ? 4 : 0;
+  },
+  function (voyage, history) {
+    return history.filter(v => v.profit < 0).length;
+  },
+  function (voyage, history) {
+    return voyage.zone === 'china' && hasChina(history) ? -2 : 0;
+  }
+]
+
 function voyageRisk(voyage) {
   let result = 1;
   handleRisk.map(handler => {
-    result += handler(voyage)
+    result += handler(voyage);
   })
   return Math.max(result, 0);
 }
@@ -26,13 +38,9 @@ function hasChina(history) {
 
 function captainHistoryRisk (voyage, history) {
   let result = 1;
-  if (history.length < 5) {
-    result += 4;
-  }
-  result += history.filter(v => v.profit < 0).length;
-  if (voyage.zone === 'china' && hasChina(history)) {
-    result -= 2;
-  }
+  handleHistoryRisk.map(handler => {
+    result += handler(voyage, history);
+  })
   return Math.max(result, 0);
 }
 
