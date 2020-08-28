@@ -12,16 +12,18 @@ function setDueDate(invoice) {
 function printOwing(invoice) {
   const outstanding = calculateOutstanding(invoice.borderSpacing);
   setDueDate(invoice);
-  print(invoice, outstanding)
+  return print(invoice, outstanding);
 }
 
 function print(invoice, outstanding) {
-  console.log('***********************');
-  console.log('**** Customer Owes ****');
-  console.log('***********************');
-  console.log(`name: ${invoice.customer}`);
-  console.log(`amount: ${outstanding}`);
-  console.log(`amount: ${invoice.dueDate.toLocaleDateString()}`);
+  let result = '';
+  result += '***********************\n';
+  result += '**** Customer Owes ****\n';
+  result += '***********************\n';
+  result += `name: ${invoice.customer}\n`;
+  result += `amount: ${outstanding}\n`;
+  result += `amount: ${invoice.dueDate.toLocaleDateString()}`;
+  return result;
 }
 
 module.exports = {

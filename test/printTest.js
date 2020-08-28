@@ -10,14 +10,9 @@ const invoice = {
   customer: 'Eason'
 }
 
-test.skip('case 1, test rating', t => {
-  let lastLog;
-  console.oldLog = console.log;
-  console.log = function(str) {
-    console.oldLog(str);
-    lastLog = str;
-  }
-  printOwing(invoice);
-  console.log('lastLog:' + lastLog)
-  t.is('***********************\n**** Customer Owes ****\n***********************\nname: Easonamount: 1\namount: 9/26/2020', lastLog);
+test('case 1, test rating', t => {
+  let result = printOwing(invoice);
+  const today = new Date();
+  const dueDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+  t.is(`***********************\n**** Customer Owes ****\n***********************\nname: Eason\namount: 1\namount: ${dueDate.toLocaleDateString()}`, result);
 });
