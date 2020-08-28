@@ -45,7 +45,7 @@ function captainHistoryRisk(voyage, history) {
 }
 
 const handleVoyageProfitFactor = [
-  function (voyage, history) {
+  function (voyage) {
     return COrEI.filter(c => voyage.zone === c).length;
   },
   function (voyage, history) {
@@ -57,13 +57,13 @@ const handleVoyageProfitFactor = [
   function (voyage, history) {
     return voyage.length > 12 ? 1 + handleVoyageProfitFactor[4](voyage, history) : handleVoyageProfitFactor[4](voyage, history);
   },
-  function (voyage, history) {
+  function (voyage) {
     return voyage.length > 18 ? -1 : 0;
   },
   function (voyage, history) {
     return history.length > 8 ? 1 + handleVoyageProfitFactor[6](voyage, history) : handleVoyageProfitFactor[6](voyage, history);
   },
-  function (voyage, history) {
+  function (voyage) {
     return voyage.length > 14 ? -1 : 0;
   }
 ]
